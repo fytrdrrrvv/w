@@ -1,7 +1,6 @@
 requests
 beautifulsoup4
-user-agent
+user_agent
 httpx
-httpx[http2]
 h2
 rich
