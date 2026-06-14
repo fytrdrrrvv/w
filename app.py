@@ -64,7 +64,7 @@ from rich import box
 import re
 from threading import Thread  
 
-# ========== إعداد التوكن والـ ID مباشرة ==========
+# ========== التوكن والـ ID مضافين مباشرة ==========
 TOKEN = "8738412833:AAH7aXrtQxqF2lq2EYSLI_EEWEFFOjqepLc"
 CHAT_ID = "5739065274"
 # =============================================
@@ -125,7 +125,7 @@ table.add_row("instagram Hidden followers")
 console.print(table)
 
 print("\n")
-# تم إزالة طلب إدخال التوكن والـ ID واستبدالهما بالقيم المباشرة
+# تم إزالة طلب الإدخال - التوكن والـ ID موجودين مباشرة في الكود
 print(f'{X}Token and ID loaded from code!{RESET}')
 print('')
 from requests import post as pp
@@ -608,33 +608,5 @@ def collect_users_1():
     for _ in range(100):
         Thread(target=worker).start()
 
-# ========== حل مشكلة المنفذ (Port) لـ Render ==========
-# تشغيل الخادم الأساسي في thread منفصل
-if __name__ == "__main__":
-    # تشغيل الوظيفة الرئيسية في thread
-    main_thread = Thread(target=collect_users_1)
-    main_thread.daemon = True
-    main_thread.start()
-    
-    # تشغيل خادم HTTP بسيط على المنفذ المطلوب لـ Render
-    try:
-        from http.server import HTTPServer, BaseHTTPRequestHandler
-        
-        class HealthCheckHandler(BaseHTTPRequestHandler):
-            def do_GET(self):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write(b"Bot is running!")
-            def log_message(self, format, *args):
-                pass  # تعطيل التسجيل لتجنب الفوضى
-        
-        port = int(os.environ.get('PORT', 8080))
-        server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
-        print(f"Server running on port {port}")
-        server.serve_forever()
-    except Exception as e:
-        print(f"Server error: {e}")
-        # إذا فشل الخادم، استمر في تشغيل البوت فقط
-        collect_users_1()
-# ====================================================
+# تشغيل البرنامج مباشرة بدون أي تعديلات
+collect_users_1()
