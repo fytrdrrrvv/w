@@ -1,0 +1,7 @@
+requests
+beautifulsoup4
+user-agent
+httpx
+httpx[http2]
+h2
+rich
