@@ -63,8 +63,12 @@ from rich.table import Table
 from rich import box
 import re
 from threading import Thread  
-    
-    
+
+# ========== إعداد التوكن والـ ID مباشرة ==========
+TOKEN = "8738412833:AAH7aXrtQxqF2lq2EYSLI_EEWEFFOjqepLc"
+CHAT_ID = "5739065274"
+# =============================================
+
 def r(n): return ''.join(random.choices(string.ascii_letters + string.digits, k=n))
 
 console = Console()
@@ -121,9 +125,9 @@ table.add_row("instagram Hidden followers")
 console.print(table)
 
 print("\n")
-token=('8738412833:AAH7aXrtQxqF2lq2EYSLI_EEWEFFOjqepLc')
+# تم إزالة طلب إدخال التوكن والـ ID واستبدالهما بالقيم المباشرة
+print(f'{X}Token and ID loaded from code!{RESET}')
 print('')
-ID=('5739065274')
 from requests import post as pp
 from user_agent import generate_user_agent as gg
 from random import choice as cc
@@ -386,9 +390,9 @@ def info(username, jj):
             
 
             try:
-                telegram_url = f"https://api.telegram.org/bot{token}/sendMessage"
+                telegram_url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
                 response = requests.post(telegram_url, data={
-                    "chat_id": ID,
+                    "chat_id": CHAT_ID,
                     "text": msg
                 }, timeout=10)
                 
@@ -415,8 +419,8 @@ def info(username, jj):
 
         try:
             requests.post(
-                f"https://api.telegram.org/bot{token}/sendMessage",
-                data={"chat_id": ID, "text": msg},
+                f"https://api.telegram.org/bot{TOKEN}/sendMessage",
+                data={"chat_id": CHAT_ID, "text": msg},
                 timeout=10
             )
         except Exception as e:
@@ -604,4 +608,33 @@ def collect_users_1():
     for _ in range(100):
         Thread(target=worker).start()
 
-collect_users_1()
+# ========== حل مشكلة المنفذ (Port) لـ Render ==========
+# تشغيل الخادم الأساسي في thread منفصل
+if __name__ == "__main__":
+    # تشغيل الوظيفة الرئيسية في thread
+    main_thread = Thread(target=collect_users_1)
+    main_thread.daemon = True
+    main_thread.start()
+    
+    # تشغيل خادم HTTP بسيط على المنفذ المطلوب لـ Render
+    try:
+        from http.server import HTTPServer, BaseHTTPRequestHandler
+        
+        class HealthCheckHandler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                self.wfile.write(b"Bot is running!")
+            def log_message(self, format, *args):
+                pass  # تعطيل التسجيل لتجنب الفوضى
+        
+        port = int(os.environ.get('PORT', 8080))
+        server = HTTPServer(('0.0.0.0', port), HealthCheckHandler)
+        print(f"Server running on port {port}")
+        server.serve_forever()
+    except Exception as e:
+        print(f"Server error: {e}")
+        # إذا فشل الخادم، استمر في تشغيل البوت فقط
+        collect_users_1()
+# ====================================================
